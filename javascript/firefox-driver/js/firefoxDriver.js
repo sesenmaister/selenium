@@ -390,7 +390,7 @@ FirefoxDriver.prototype.getPageSource = function(respond) {
 
   // The command & response attributes we removed are one-shots, we only
   // need to add back the webdriver attribute.
-  docElement.setAttribute('webdriver', 'true');
+  // docElement.setAttribute('webdriver', 'true');
 };
 
 

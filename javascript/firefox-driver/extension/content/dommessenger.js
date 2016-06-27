@@ -94,7 +94,7 @@ DomMessenger.prototype.onPageLoad = function(e) {
   // Annotate the documentElement to signal to the client that webdriver is
   // installed.
   var doc = e.originalTarget || e.target;
-  doc.documentElement.setAttribute('webdriver', true);
+  // doc.documentElement.setAttribute('webdriver', true);
   doc.addEventListener(
       DomMessenger.EventType.COMMAND, this.commandEventListener_, true);
 };

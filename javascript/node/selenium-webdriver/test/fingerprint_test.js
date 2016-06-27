@@ -35,22 +35,29 @@ test.suite(function(env) {
   });
 
   describe('fingerprinting', function() {
-    test.it('it should fingerprint the navigator object', function() {
-      driver.get(Pages.simpleTestPage);
-      assert(driver.executeScript('return navigator.webdriver')).equalTo(true);
-    });
+    // test.it('it should fingerprint the navigator object', function() {
+    //   driver.get(Pages.simpleTestPage);
+    //   assert(driver.executeScript('return navigator.webdriver')).equalTo(true);
+    // });
 
-    test.it('fingerprint must not be writable', function() {
+    // test.it('fingerprint must not be writable', function() {
+    //   driver.get(Pages.simpleTestPage);
+    //   assert(driver.executeScript(
+    //       'navigator.webdriver = "ohai"; return navigator.webdriver'))
+    //       .equalTo(true);
+    // });
+
+    test.it('no_fingerprint must yes be writable', function() {
       driver.get(Pages.simpleTestPage);
       assert(driver.executeScript(
           'navigator.webdriver = "ohai"; return navigator.webdriver'))
-          .equalTo(true);
+          .equalTo('ohai');
     });
-
-    test.it('leaves fingerprint on svg pages', function() {
-      driver.get(Pages.svgPage);
-      assert(driver.executeScript('return navigator.webdriver')).equalTo(true);
-    });
+    
+    // test.it('leaves fingerprint on svg pages', function() {
+    //   driver.get(Pages.svgPage);
+    //   assert(driver.executeScript('return navigator.webdriver')).equalTo(true);
+    // });
   });
 
 // Currently only implemented in legacy firefox.
