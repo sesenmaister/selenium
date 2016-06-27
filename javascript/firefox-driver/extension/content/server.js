@@ -44,14 +44,14 @@ window.addEventListener('load', function(e) {
           doc.createElementNS('http://www.w3.org/2000/svg', 'script') :
           doc.createElement('script');
       script.setAttribute('type', 'text/javascript');
-      script.textContent = '(' + function() {
-        Object.defineProperty(window.navigator, 'webdriver', {
-          value: true,
-          configurable: false,
-          enumerable: true,
-          writable: false
-        });
-      } + ')()';
+  //     //script.textContent = '(' + function() {
+  //     //  Object.defineProperty(window.navigator, 'webdriver', {
+  //     //    value: true,
+  //     //    configurable: true,
+  //     //    enumerable: true,
+  //     //    writable: true
+  //     //  });
+  //     //} + ')()';
       doc.documentElement.appendChild(script);
       doc.documentElement.removeChild(script);
     });

@@ -1,0 +1,79 @@
+for the record...
+
+################################################################################
+#
+# 1.- Related original commits:
+#
+################################################################################
+server.js
+b8251299  [the official fingerprint commit, 2015] 
+
+firefoxDriver.js
+44f9d708  [a long time ago, 2010]
+
+dommessenger.js
+[7872808d]  [that's a container commit]
+
+
+
+#---------------------------------------------------------
+$ git diff 866609 b8251299 --name-only
+javascript/firefox-driver/extension/content/server.js
+javascript/node/selenium-webdriver/test/fingerprint_test.js
+
+
+    commit b82512999938d41f6765ce8017284dcabe437d4c
+    Author: Jason Leyba <jmleyba@gmail.com>
+    Date:   Tue Jan 27 15:53:11 2015 -0800
+
+        Implement fingerprinting in the FirefoxDriver
+
+        The FirefoxDriver will flag its presence by setting
+        window.navigator.webdriver === true on every page.
+
+        See: https://w3c.github.io/webdriver/webdriver-spec.html#fingerprinting
+
+        For now, the original fingerprinting method (setting an attribute on
+        documentElement) remains.
+
+
+#--------------------------------------------------------
+    commit 44f9d7083fc1e380df702a3977df820e97372b05
+    Author: Jason Lebya <jmleyba@gmail.com>
+    Date:   Fri Oct 1 16:16:14 2010 +0000
+
+        JasonLeyba: (issue 855) Fix how we generate a response to getPageSource
+        (in particular, do not assume the page is HTML).
+
+
+
+
+################################################################################
+#
+# 2.- Other related files on build:
+#
+################################################################################
+The changes done in server.js, dommessenger.js and firefoxDriver.js will
+propagate on build:
+
+ On build, (1)command-processor.js and (2)driver-component.js are re/generated
+and afterwards the (3)webdriver.xpi zipfile is created, wich contains all the
+modified javascript files.
+
+
+Example as it was (1) and (2) before removing the html tag fingerprint:
+
+./buck-out/bin/javascript/firefox-driver/webdriver-xpi/components/command-processor.js:  c ? "text/plain" == b.document.contentType ? (a.value = b.document.documentElement.textContent, a.send()) : (c.removeAttribute("webdriver"), c.removeAttribute("command"), c.removeAttribute("response"), a.value = (new b.XMLSerializer).serializeToString(b.document), a.send(), c.setAttribute("webdriver", "true")) : (a.value = "", a.send());
+./buck-out/bin/javascript/firefox-driver/webdriver-xpi/components/driver-component.js:  c ? "text/plain" == b.document.contentType ? (a.value = b.document.documentElement.textContent, a.send()) : (c.removeAttribute("webdriver"), c.removeAttribute("command"), c.removeAttribute("response"), a.value = (new b.XMLSerializer).serializeToString(b.document), a.send(), c.setAttribute("webdriver", "true")) : (a.value = "", a.send());
+
+
+
+
+################################################################################
+#
+# 3.- Tests:
+#
+################################################################################
+At least:
+    javascript/node/selenium-webdriver/test/fingerprint_test.js
+
