@@ -24,6 +24,29 @@ from selenium.webdriver.common import utils
 import time
 
 
+def stderr_safe_nul_pipe():
+    """ based on www.py2exe.org/index.cgi/Py2ExeSubprocessInteractions:
+        The solution is not to pass None but rather specify a handle for any
+        of stdin, stdout and stderr that you don't want to pipe.
+
+        child = subprocess.Popen(...other args...
+                     stderr = childstderr)
+    """
+    import sys as _sys
+    if hasattr(_sys.stderr, 'fileno'):
+        childstderr = _sys.stderr
+    elif hasattr(_sys.stderr, '_file') and hasattr(_sys.stderr._file, 'fileno'):
+        childstderr = _sys.stderr._file
+    else:
+        # Give up and point child stderr at nul
+        childStderrPath = 'nul'
+        childstderr = file(childStderrPath, 'a')
+    return childstderr
+
+STDOUT = stderr_safe_nul_pipe()  # STDOUT, here, only employed as stderr pipe
+
+
+
 class FirefoxBinary(object):
 
     NO_FOCUS_LIBRARY_NAME = "x_ignore_nofocus.so"
